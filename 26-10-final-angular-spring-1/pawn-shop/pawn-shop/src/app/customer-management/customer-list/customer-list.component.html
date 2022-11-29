@@ -1,0 +1,95 @@
+<div class="container ps-5 pe-5">
+  <div class="row pt-5">
+    <div class="col-md-3 col-lg-3 col-sm-3 d-flex justify-content-center align-content-center">
+      <a routerLink="/customer-add" class="p-btn" >
+        <i class="fa-solid fa-plus"></i>
+        THÊM MỚI KHÁCH HÀNG
+      </a>
+    </div>
+    <div class="col-lg-5 col-md-5 col-sm-5   d-flex justify-content-center align-content-center"><h3>DANH SÁCH KHÁCH HÀNG</h3></div>
+    <div class="col-lg-4 col-md-4 col-sm-4  d-flex justify-content-center align-content-center">
+      <div class="mySearch d-flex justify-content-center align-content-center">
+        <input  class="form-control me-2" type="text"
+                placeholder="Tìm kiếm"
+                name="name"
+                [(ngModel)]="name" >
+        <button class="btn p-btn" type="submit" (click)="searchNameCustomer()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <table class="table table-hover shadow table-responsive">
+    <thead>
+    <tr class="text-light">
+      <th scope="col">STT</th>
+      <th scope="col">Mã khách hàng</th>
+      <th scope="col">Số CMND</th>
+      <th scope="col">Họ và tên</th>
+      <th scope="col">SĐT</th>
+      <th scope="col">Giới tính</th>
+      <th scope="col">Số lượng hợp đồng</th>
+      <th>Sửa</th>
+      <th>Xóa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let customer of customerPage index as i">
+      <th>{{i + 1 + page * size}}</th>
+      <td>{{customer.code}}</td>
+      <td>{{customer.idCard}}</td>
+      <td>{{customer.name}}</td>
+      <td>{{customer.phoneNumber}}</td>
+      <td *ngIf="customer.gender == 0">Nữ</td>
+      <td *ngIf="customer.gender == 1">Nam</td>
+      <td class="text-center">{{customer.amountContract}}</td>
+      <td><button class="btn"  [routerLink]="['/customer-update',customer.id]"><i class="fa-solid fa-pen-to-square"></i></button></td>
+      <td><button class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="elementDelete(customer.id,customer.name,customer.imgUrl)"><i class="fa-solid fa-trash text-danger"></i></button></td>
+    </tr>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content" >
+          <div class="modal-header text-white text-center" style=" background: linear-gradient(to right, #f37214, #ff3300);">
+            <h5 class="modal-title  " id="exampleModalLabel">Xóa khách hàng</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Bạn có muốn xóa khách hàng <strong>{{nameModal}}</strong> không?
+            <img src="{{imgUrlModal}}" alt="" width="60">
+            <br>
+            <b class="text-danger">Lưu ý sau khi xóa không thể hoàn tác trừ NghiaNVT</b>
+          </div>
+          <div class="modal-footer">
+            <button (click)="resetModal()" style="border-radius: 5px !important;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Trở về</button>
+            <button (click)="deleteCustomer()" style="border-radius: 5px !important;" type="button" class="btn btn-danger" data-bs-dismiss="modal">Xóa</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </tbody>
+  </table>
+  <div class="text-center" *ngIf="customerPage == '' ">
+    <div class="text-center" ><h4 class="text-danger">Hiện không có người bạn cần tìm <i class="fa-solid fa-magnifying-glass"></i></h4></div>
+  </div>
+  <div class="d-flex container d-flex justify-content-center align-items-center mt-5">
+    <ul class="p-pagination modal-2">
+      <li class="page-item" *ngIf="page">
+        <a class="page-link text-dark" (click)="previous()">&laquo;
+        </a>
+      </li>
+      <ng-container *ngFor="let pageNow of pageSelect">
+        <ng-container *ngIf="pageNow == page">
+          <li class="page-item"><a class="page-link active">{{pageNow + 1}}</a></li>
+        </ng-container>
+        <ng-container *ngIf="pageNow != page">
+          <li class="page-item"><a class="page-link text-dark" (click)="changePage(pageNow)">{{pageNow + 1}}</a></li>
+        </ng-container>
+      </ng-container>
+      <li class="page-item" *ngIf="page != totalPage - 1"><a class="page-link text-dark" (click)="next()">&raquo;</a></li>
+    </ul>
+  </div>
+</div>

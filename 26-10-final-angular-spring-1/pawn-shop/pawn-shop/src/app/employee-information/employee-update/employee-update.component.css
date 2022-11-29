@@ -1,0 +1,44 @@
+.p-btn{
+  background: linear-gradient(to right,#f37214,#ff3300);
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 0.25rem !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+.p-bg{
+  background: linear-gradient(to right,#f37214,#ff3300);
+}
+
+.p-td{
+  padding-left: 30px
+}
+.p-a{
+  text-decoration: none;
+  color: black;
+}
+.p-a:hover{
+  color: #ff3300;
+}
+
+#bg-header{
+  background: -webkit-gradient(linear, left top, right top, from(#f37214), to(orange));
+  background: linear-gradient(to right, orange, #f37214);
+}
+.icon:hover{
+  transform: translateY(-0.3rem);
+  transition: .3s;
+}

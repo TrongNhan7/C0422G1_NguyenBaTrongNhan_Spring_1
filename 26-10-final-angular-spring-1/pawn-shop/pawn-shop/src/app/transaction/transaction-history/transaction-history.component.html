@@ -1,0 +1,212 @@
+<div class="container ps-5 pe-5 col-sm-12 col-lg-12 col-md-12" style="margin: auto">
+  <h2 class="text-center">LỊCH SỬ GIAO DỊCH</h2>
+  <div class="row">
+    <div class="input-group-sm col-lg-4 mb-2">
+      <label for="nameSearch" class="form-label font-weight-bold">Tên Khách Hàng</label>
+      <input id="nameSearch" type="text" name="customerName" placeholder="VD: Nguyễn Văn A"
+             class="form-control bg-white border-left-0 border-md" [(ngModel)]="customerName"
+             >
+    </div>
+
+    <div class="input-group-sm col-lg-4 mb-2">
+      <label for="consignmentSearch" class="form-label font-weight-bold">Tên Đồ</label>
+      <input id="consignmentSearch" type="text" name="pawnItemName"
+             placeholder="VD: Iphone X"
+             class="form-control bg-white border-left-0 border-md" [(ngModel)]="pawnItemName"
+             >
+    </div>
+    <div class="input-group-sm col-lg-4 mb-4">
+      <label for="contractType" class="form-label font-weight-bold">Loại Hợp Đồng</label>
+      <select id="contractType" name="typeContract" class="form-select bg-white border-left-0 border-md" [(ngModel)]="typeContract"
+              >
+        <option value="" selected class="text-secondary">Chọn loại hợp đồng</option>
+        <option [value]="1">Thanh lý</option>
+        <option [value]="0">Cầm đồ</option>
+      </select>
+    </div>
+
+    <div class="input-group-sm col-lg-4 mb-2">
+      <label for="dateSearch" class="form-label font-weight-bold">Giao Dịch Từ Ngày</label>
+      <input id="dateSearch" type="date" name="dateSearch"
+             placeholder="Tìm kiếm theo ngày"
+             class="form-control bg-white border-left-0 border-md" [(ngModel)]="startDate">
+    </div>
+    <div class="input-group-sm col-lg-4 mb-4">
+      <label for="dateSearch1" class="form-label font-weight-bold">Đến</label>
+      <input id="dateSearch1" type="date" name="dateSearch"
+             placeholder="Tìm kiếm theo ngày"
+             class="form-control bg-white border-left-0 border-md" [(ngModel)]="endDate">
+    </div>
+    <div class="input-group-sm col-lg-4 mb-4">
+      <label for="status" class="form-label font-weight-bold">Trạng Thái</label>
+      <select id="status" name="statusContract" class="form-select bg-white border-left-0 border-md" [(ngModel)]="statusContract">
+        <option value="" selected class="text-secondary">Chọn Trạng thái</option>
+        <option [value]="0">Hợp đồng cầm đồ còn hạn</option>
+        <option [value]="1">Hợp đồng cầm đồ trả đúng hạn</option>
+        <option [value]="2">Hợp đồng chờ thanh lý</option>
+        <option [value]="3">Hợp đồng đã thanh lý</option>
+        <option [value]="4">Hợp đồng đăng ký nhanh</option>
+      </select>
+    </div>
+    <div class="form-group-lg col-lg-4 col-md-12 mx-auto mb-4 d-flex justify-content-center">
+      <button type="submit" data-bs-dismiss="modal" aria-label="Close" (click)="onSearchPageContract()"
+              class="ps-5 pe-5 p-btn btn-warning align-content-center btn-block py-2 d-flex text-center text-light">
+        <span class="fa fa-search"></span>
+      </button>
+    </div>
+  </div>
+  <table class="table shadow table-responsive">
+    <thead>
+    <tr class="p-bg-warning bg-gradient">
+      <th class="font-weight-bold" style="width: 1%;">STT</th>
+      <th class="font-weight-bold" style="width: 15%;">Mã HĐ</th>
+      <th class="font-weight-bold" style="width: 15%;">Tên KH</th>
+      <th class="font-weight-bold" style="width: 15%;">Tên Đồ</th>
+      <th class="font-weight-bold" style="width: 15%;">Ngày Bắt Đầu</th>
+      <th class="font-weight-bold" style="width: 15%;">Ngày Kết Thúc</th>
+      <th class="font-weight-bold" style="width: 8%">Loại HĐ</th>
+      <th class="font-weight-bold text-center" style="width: 10%;">Trạng thái</th>
+      <th class="font-weight-bold text-center" colspan="3" style="width: 1%">Chức năng</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngIf="contractsPage">
+      <tr *ngFor="let contracts of contractsPage index as i">
+        <th>{{i + 1}}</th>
+        <td>{{contracts.code}}</td>
+        <td>{{contracts.customer}}</td>
+        <td data-bs-toggle="tooltip" data-bs-placement="top" title="{{contracts.pawnItem}}">
+          {{contracts.pawnItem | slice:0 : 10}}...
+        </td>
+        <td>{{contracts.startDate | date:"dd/MM/yyyy"}}</td>
+        <td>{{contracts.endDate | date: "dd/MM/yyyy"}}</td>
+        <ng-container *ngIf="contracts.type == 1">
+          <td>Thanh lý</td>
+        </ng-container>
+        <ng-container *ngIf="contracts.type == 0">
+          <td>Cầm đồ</td>
+        </ng-container>
+        <td class="text-center" *ngIf="!contracts.status">
+        <span class="fa fa-circle text-center p-text-success" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Hợp đồng cầm đồ còn hạn"></span>
+        </td>
+        <td class="text-center" *ngIf="contracts.status == 1">
+        <span class="fa fa-circle text-center text-warning" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Hợp đồng cầm đồ trả đúng hạn"></span>
+        </td>
+        <td class="text-center" *ngIf="contracts.status == 2">
+        <span class="fa fa-circle text-center text-primary" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Hợp đồng chờ thanh lý"></span>
+        </td>
+        <td class="text-center" *ngIf="contracts.status == 3">
+        <span class="fa fa-circle text-center text-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Hợp đồng đã thanh lý"></span>
+        </td>
+        <td class="text-center" *ngIf="contracts.status == 4">
+        <span class="fa fa-circle text-center text-info" data-bs-toggle="tooltip" data-bs-placement="top"
+              title="Hợp đồng đăng kí nhanh"></span>
+        </td>
+
+
+        <td>
+          <button type="button" class="border-0 bg-white text-center" data-bs-toggle="modal" data-bs-target="#info" (click)="getContractById(contracts.id)">
+            <span class="fa fa-circle-info text-primary"></span>
+          </button>
+        </td>
+        <td>
+          <button type="button" class="border-0 bg-white" [routerLink]="['/update-contract/', contracts.id]">
+            <i class="fa-solid fa-pen-to-square" data-bs-toggle="tooltip" data-bs-placement="top"
+               title="chỉnh sửa giao dịch"></i>
+          </button>
+        </td>
+        <td>
+          <button type="button" class="border-0 bg-white" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getContractById(contracts.id)">
+            <i class="fa-solid fa-trash text-danger"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+  <ng-container *ngIf="contractsPage == ''" class="text-center">
+    <div class="text-center"><h4 class="text-danger"><span class="fa fa-search"></span>&nbsp;&nbsp;không tìm thấy dữ liệu</h4></div>
+  </ng-container>
+
+  <div class="container justify-content-center d-flex align-content-center mt-4">
+    <ul class="p-pagination modal-2 shadow">
+      <li class="page-item" *ngIf="page">
+        <a class="page-link text-dark" (click)="previousPage()">&laquo;</a>
+      </li>
+      <ng-container *ngFor="let pageNow of pageSelect">
+        <ng-container *ngIf="pageNow == page">
+          <li class="page-item"><a class="page-link text-light active">{{pageNow + 1}}</a></li>
+        </ng-container>
+        <ng-container *ngIf="pageNow != page">
+          <li class="page-item"><a class="page-link text-dark" (click)="changePage(pageNow)">{{pageNow + 1}}</a></li>
+        </ng-container>
+      </ng-container>
+      <li class="page-item" *ngIf="page != totalPage - 1">
+        <a class="page-link text-dark" (click)="nextPage()">&raquo;</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="modal fade" id="info" tabindex="-1" aria-labelledby="info1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center p-bg-warning">
+        <h5 class="modal-title" id="info1">THÔNG TIN CHI TIẾT GIAO DỊCH</h5>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <p>Mã HĐ: {{contract.code}}</p>
+          <p>Tên KH: {{contract.customer}}</p>
+          <p>Tên Đồ: {{contract.pawnItem}}</p>
+          <p>Email: {{contract.customerEmail}}</p>
+          <p>SĐT: {{contract.phoneNumber}}</p>
+          <p>Ngày Bắt Đầu: {{contract.startDate | date:"dd/MM/yyyy"}}</p>
+          <p>Ngày Kết Thúc: {{contract.endDate | date:"dd/MM/yyyy"}}</p>
+          <p *ngIf="contract.status == 0">Trạng Thái: Hơp đồng cầm đồ còn hạn </p>
+          <p *ngIf="contract.status == 1">Trạng Thái: Hợp đồng cầm đồ trả đúng hạn </p>
+          <p *ngIf="contract.status == 2">Trạng Thái: Hợp đồng chờ thanh lý </p>
+          <p *ngIf="contract.status == 3">Trạng Thái: Hợp đồng đã thanh lý </p>
+          <p *ngIf="contract.status == 4">Trạng Thái: Hơp đồng đăng kí nhanh </p>
+          <p *ngIf="contract.type == 0">Loại HĐ: Thanh lý</p>
+          <p *ngIf="contract.type == 1">Loại HĐ: Cầm đồ</p>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center align-content-center m-1">
+        <button type="button" class="btn btn-secondary col-sm-12" data-bs-dismiss="modal">Quay lại</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header p-bg-warning">
+        <h5 class="modal-title" id="exampleModalLabel1">THÔNG BÁO KHẨN CẤP</h5>
+      </div>
+      <div class="modal-body text-center">
+        <div class="container">
+          Bạn có muốn xóa giao dịch có mã hợp đồng là {{contract.code}} không ?
+          <h4>Thông tin chi tiết</h4>
+          <p>Tên khách hàng: {{contract.customer}}</p>
+          <p>Tên đồ cầm: {{contract.pawnItem}}</p>
+          <p>Ngày làm hợp đồng: {{contract.startDate | date:"dd/MM/yyyy"}}</p>
+          <p>Ngày hết hợp đồng: {{contract.endDate | date:"dd/MM/yyyy"}}</p>
+        </div>
+        <i class="fa fa-warning fa-4x text-warning"></i>
+        <p class="text-danger">Lưu ý : Dữ liệu không thể hoàn tác!</p>
+      </div>
+      <div class="d-flex justify-content-center align-content-center m-1">
+        <button type="button" class="btn btn-secondary col-sm-6" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn p-bg-warning col-sm-6" (click)="deleteContract(contract.id)" data-bs-dismiss="modal">Xác Nhận</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,16 @@
+.hotline{
+  display: flex;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+*{
+  user-select: none;
+}
+
+@media all and (max-width: 968px){
+  .hotline{
+    display: none;
+  }
+}

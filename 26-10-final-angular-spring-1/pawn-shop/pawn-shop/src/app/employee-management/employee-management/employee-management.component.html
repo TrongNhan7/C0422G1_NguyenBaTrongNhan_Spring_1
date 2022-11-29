@@ -1,0 +1,136 @@
+<div class="body mt-5">
+  <h1 style="text-align: center">QUẢN LÝ NHÂN VIÊN</h1>
+    <div style="min-height: 400px;border-radius: 10px 10px 0px 0px" class="container container-list  pb-2">
+      <div>
+        <div class="row mt-2 " >
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="row">
+              <div class="col-md-3 col-lg-3 col-sm-3">
+                <a class="p-btn" style=" width: 130px;" href="">
+                  <i class="fa-solid fa-plus"></i>
+                  Thêm Mới
+                </a>
+              </div>
+              <div class="col-md-9 col-lg-9 col-sm-9">
+                <form [formGroup]="formSearch" (submit)="searchCodeName()" *ngIf="formSearch">
+                  <div class="col-4 mx-auto me-1" style="display: flex; width: 300px ;height: 40px">
+                    <input class="form-control me-1" type="text" formControlName="typeSearch" name="typeSearch"
+                           placeholder="Tìm tên nhân viên...">
+                    <button type="submit" class="p-btn" style="width: 150px;"><i
+                      class="fa-solid fa-magnifying-glass"></i></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <table class="table table-responsive shadow mt-2">
+            <thead>
+            <tr style="background-color: #f37214">
+              <th class="text-light" style="width: 5%">STT</th>
+              <th class="text-light" style="width: 12%">Mã NV</th>
+              <th class="text-light" style="width: 18%">
+                Tên NV
+
+              </th>
+              <th class="text-light" style="width: 15%">
+                Số Điện Thoại
+              </th>
+              <th class="text-light" style="width: 20%">
+                Địa Chỉ
+              </th>
+              <th class="text-light" style="width: 20%">
+                Email
+              </th>
+              <th class="text-light" style="width: 15%" colspan="2">Chức Năng</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of employee;let i=index">
+              <td>{{(i + 1) + (page * sizePage) }}</td>
+              <td data-bs-toggle="tooltip" data-bs-placement="top" title="{{item.code}}">{{item.code}}</td>
+              <td data-bs-toggle="tooltip" data-bs-placement="top" title="{{item.name}}"> {{item.name | slice :0:18  }}
+                ...
+              </td>
+              <td data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="{{item.phoneNumber}}">{{item.phoneNumber}}</td>
+              <td data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="{{item.address}}">{{item.address | slice :0:18  }} ...
+              </td>
+              <td data-bs-toggle="tooltip" data-bs-placement="top" title="{{item.email}}">{{item.email | slice :0:18  }}
+                ...
+              </td>
+              <td>
+                <button disabled style="border: none;background: none;padding-right: 0 " class="text-dark"><i
+                  class="fa-solid fa-pen-to-square"></i></button>
+              </td>
+              <td>
+                <button style="border: none ;background: none" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" (click)="getModal(item.id,item.code,item.name)">
+                  <i class="fa-solid fa-trash text-danger"></i></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <h2 *ngIf="employee.length === 0" style="color: red;text-align: center">Dữ liệu bạn nhập không có ,vui lòng
+            nhập
+            lại.
+          </h2>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header" style="background: #f37214 ;height: 40px">
+                <h5 style="color: white" class="modal-title" id="exampleModalLabel">Xoá Nhân Viên</h5>
+                <button type="button" class="close" style="background: none;border: none"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                Bạn có muốn xoá nhân viên có tên là: <span>{{nameModal}}</span> với mã nhân viên là:
+                <span>{{codeModal}}</span>
+              </div>
+              <div class="modal-footer">
+                <span style="color: red"> * lưu ý tác vụ không thể hoàn tác </span>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Quay lại</button>
+                <button (click)="deleteId()" type="button" data-bs-dismiss="modal" class="btn btn-danger">Xác Nhận
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="container align-content-center d-flex justify-content-center  ">
+      <!--      Phan trang-->
+      <ul class="p-pagination modal-2 shadow " style="border-radius:50% ">
+        <li class="page-item">
+          <a *ngIf="checkPreview" [routerLink]="" (click)="goPrevious()"
+             class="page-link text-dark " href="#"> &laquo;
+          </a>
+        </li>
+        <ng-container *ngFor="let item of pageSelect">
+          <ng-container *ngIf="item == page">
+            <li class="page-item"><a class="page-link text-light active">{{item + 1}}</a></li>
+          </ng-container>
+          <ng-container *ngIf="item != page">
+            <li class="page-item"><a class="page-link text-dark" (click)="changePage(item)">{{item + 1}}</a></li>
+          </ng-container>
+        </ng-container>
+        <li>
+          <a *ngIf="checkNext" [routerLink]="" (click)="goNext()"
+             class="page-link text-dark" href="#">&raquo;
+          </a>
+        </li>
+      </ul>
+    </div>
+</div>
+
+
+

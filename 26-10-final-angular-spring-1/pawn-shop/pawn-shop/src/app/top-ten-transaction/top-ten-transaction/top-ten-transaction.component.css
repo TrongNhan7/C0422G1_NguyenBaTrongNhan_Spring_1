@@ -1,0 +1,277 @@
+th{
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  height: 50px;
+}
+
+/*Hieu ung nhun nhun*/
+.icon:hover{
+  transform: translateY(-0.3rem);
+  transition: .3s;
+}
+/*Quy định độ dài text*/
+td{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 14ch;
+  height: 50px;
+  text-align: center;
+}
+.header-color{
+  color: #f37214;
+}
+
+.bg-header{
+  /*background: -webkit-gradient(linear, left top, right top, from(#f37214), to(orange));*/
+  /*background: linear-gradient(to right, orange, #f37214);*/
+  background: linear-gradient(to right,#f37214,#ff3300);
+}
+.p-icon{
+  background: -webkit-gradient(linear, left top, right top, from(#f37214), to(orange));
+  background: linear-gradient(to right, orange, #f37214);
+}
+.center-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.p-btn{
+  background: linear-gradient(to right,#f37214,#ff3300);
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 0.25rem !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  height: 40px;
+}
+.p-btn-close{
+  background: gray;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 0.25rem !important;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  height: 40px;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #fff;
+  line-height: 1.9;
+  color: #8c8c8c;
+  position: relative; }
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: "Roboto", sans-serif;
+  color: #000; }
+
+a {
+  -webkit-transition: .3s all ease;
+  -o-transition: .3s all ease;
+  transition: .3s all ease; }
+a, a:hover {
+  text-decoration: none !important; }
+
+.text-black {
+  color: #000; }
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: 900; }
+
+.form-control {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 0;
+  background: none; }
+.form-control:active, .form-control:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: #000; }
+
+.col-form-label {
+  color: #000;
+  font-size: 13px; }
+
+.btn, .form-control, .custom-select {
+  height: 45px;
+  border-radius: 0; }
+
+.custom-select {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding-left: 0;
+  padding-right: 0;
+  border-radius: 0; }
+.custom-select:active, .custom-select:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-color: #000; }
+
+.btn {
+  border: none;
+  border-radius: 0;
+  font-size: 11px;
+  letter-spacing: .2rem;
+  text-transform: uppercase;
+  border-radius: 10px !important; }
+.btn.btn-primary {
+  border-radius: 10px;
+  background: -webkit-gradient(linear, left top, right top, from(#f37214), to(orange));
+  background: linear-gradient(to right, orange, #f37214);
+  color: #fff;
+  -webkit-box-shadow: 0 15px 30px 0 rgba(239, 135, 70, 0.2);
+  box-shadow: 0 15px 30px 0 rgba(239, 135, 70, 0.2); }
+.btn:hover {
+  color: #fff; }
+.btn:active, .btn:focus {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none; }
+
+.contact-wrap {
+  -webkit-box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #efefef; }
+.contact-wrap .col-form-label {
+  font-size: 14px;
+  color: #b3b3b3;
+  margin: 0 0 10px 0;
+  display: inline-block;
+  padding: 0; }
+.contact-wrap .form, .contact-wrap .contact-info {
+  padding: 40px; }
+.contact-wrap .contact-info {
+  color: rgba(255, 255, 255, 0.5); }
+.contact-wrap .contact-info ul li {
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.5); }
+.contact-wrap .contact-info ul li .wrap-icon {
+  font-size: 20px;
+  color: #fff;
+  margin-top: 5px; }
+.contact-wrap .form {
+  background: #fff; }
+.contact-wrap .form h3 {
+  color: #000;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px; }
+.contact-wrap .contact-info {
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat; }
+.contact-wrap .contact-info a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+@media (max-width: 1199.98px) {
+  .contact-wrap .contact-info {
+    height: 400px !important; } }
+.contact-wrap .contact-info h3 {
+  color: #fff;
+  font-size: 20px;
+  margin-bottom: 30px; }
+
+label.error {
+  font-size: 12px;
+  color: red; }
+
+#message {
+  resize: vertical; }
+
+#form-message-warning, #form-message-success {
+  display: none; }
+
+#form-message-warning {
+  color: #B90B0B; }
+
+#form-message-success {
+  color: #55A44E;
+  font-size: 18px;
+  font-weight: bold; }
+
+.submitting {
+  float: left;
+  width: 100%;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.header-color {
+  color: #ef4339;
+  text-shadow: 0 15px 30px 0 rgba(239, 67, 57, 0.2);
+}
+
+.social-buttons button {
+  cursor: pointer;
+  color: #fff;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.social-buttons button .bg {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  background: -webkit-gradient(linear, left top, right top, from(#f37214), to(orange));
+  background: linear-gradient(to right, orange, #f37214);
+  border-radius: 10px;
+  pointer-events: none;
+  box-shadow: 0 0 10px orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-buttons button i {
+  position: relative;
+  z-index: 10;
+  font-size: 15px;
+}
+
+.status-text{
+  color: #3CD421;
+  box-shadow: 0 0 10px #3CD421, 0 0 40px #3CD421, 0 0 80px #3CD421;
+}
+.p-nodata{
+  background: -webkit-gradient(linear, left top, right top, from(#f37214), to(orange));
+  background: linear-gradient(to right, orange, #f37214);
+  height: 70%;
+}

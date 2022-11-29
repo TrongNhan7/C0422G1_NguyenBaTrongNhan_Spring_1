@@ -1,0 +1,211 @@
+<div class="container-fluid">
+  <div class="row" style="position: relative">
+    <div class="col-8 col-lg-8 col-md-8 col-sm-8">
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <div class="col-12 col-lg col-md col-sm">
+              <h1 class="p-title">Tin tức & sự kiện</h1>
+            </div>
+          </div>
+          <div class="row">
+            <div style="margin-top: 21px">
+              <form [formGroup]="searchForm" (ngSubmit)="dateSearch()" *ngIf="searchForm">
+                <div class="d-flex col-12 align-content-end">
+
+                  <div class="col-4 col-lg-4 col-md-4 col-sm-4 me-3 ms-3" data-bs-toggle="firstDate" data-bs-content=""
+                       data-bs-trigger="manual"
+                       data-bs-placement="top">
+                    <div>
+                      <label>Ngày bắt đầu đăng</label>
+                      <input placeholder="Select date" type="date"
+                             class="form-control"
+                             id="firstDate" formControlName="firstDate"
+                             [class.is-invalid]="searchForm.controls.firstDate.invalid && searchForm.controls.firstDate.dirty">
+                      <div *ngIf="searchForm.controls.firstDate.invalid " class="invalid-feedback">
+                        Ngày đăng không được lớn hơn ngày hiện tại!.
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-4 col-lg-4 col-md-4 col-sm-4 me-3" data-bs-toggle="lastDate" data-bs-content=""
+                       data-bs-trigger="manual"
+                       data-bs-placement="top">
+                    <label for="prefill-example">Đến</label>
+                    <div class="input-group has-validation">
+                      <input placeholder="Select date" type="date" id="prefill-example"
+                             class="form-control" formControlName="lastDate"
+                             [class.is-invalid]="searchForm.invalid && searchForm.controls.lastDate.dirty">
+                      <div *ngIf="searchForm.controls.lastDate.valid " class="invalid-feedback">
+                        Không được nhỏ hơn ngày đăng!.
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-4 col-lg-4 col-md-4 col-sm-4">
+                    <div>
+                      <button class="p-ptn" type="submit">
+                        Tìm kiếm
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <ul>
+              <li class="row p-ul" *ngFor="let temp of newsList">
+                <div class="col" style="position: relative">
+
+                  <button *ngIf="isEmployee" type="button" class="p-modal-delete" data-bs-toggle="modal"
+                          data-bs-target="#modelId" (click)="elementDelete(temp.id,temp.title)">
+                    X
+                  </button>
+
+                  <img class="p-image"
+                       [src]="temp.imgUrl">
+                </div>
+                <div class="col">
+                  <a style="text-decoration-line: none"
+                     href="https://gahalaw.com/kinh-doanh-cam-do-can-lam-nhung-thu-tuc-bat-buoc-gi.html">
+                    <h5 class="p-text-title">{{temp.title}}</h5>
+                  </a>
+                  <p>{{temp.postingDay}}</p>
+                  <p>{{temp.content}}
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 pb-1 text-center font-weight-bold"
+                 style="font-size: 30px; !important;" *ngIf="newsList.length <= 0">
+              Không có dữ liệu !!!.
+            </div>
+          </div>
+        </div>
+          <ul class="p-pagination modal-2">
+            <li class="page-item" *ngIf="number">
+              <a class="page-link text-dark" (click)="previousPage()">&laquo;</a>
+            </li>
+            <ng-container *ngFor="let count of pageSelect">
+              <ng-container *ngIf="count == number">
+                <li class="page-item"><a class="page-link text-dark active">{{count + 1}}</a></li>
+              </ng-container>
+              <ng-container *ngIf="count != number">
+                <li class="page-item"><a class="page-link text-dark" (click)="changePage(count)">{{count + 1}}</a></li>
+              </ng-container>
+            </ng-container>
+            <li class="page-item" *ngIf="number != totalPage - 1">
+              <a class="page-link text-dark" (click)="nextPage()">&raquo;</a>
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div class="col-4 col-lg-4 col-md-4 col-sm-4 " >
+      <div class="row">
+        <div class="col-12 title-right">
+          <ul class="p-ul">
+            <li class="p-li">
+                <button *ngIf="isEmployee" routerLink="/news-add" class="p-btn">
+                  Thêm tin tức
+                </button>
+            </li>
+            <li class="p-li">
+              <form [formGroup]="searchTitleForm" (ngSubmit)="searchTitle()">
+                <div class="input-group mb-3 mt-3 w-100" data-bs-toggle="titleSearch" data-bs-content=""
+                     data-bs-trigger="manual" data-bs-placement="bottom">
+                  <input type="text" class="form-control" formControlName="titleSearch"
+                         placeholder="Nhập tiêu đề cần tìm kiếm..."
+                         aria-label="Recipient's username"
+                         aria-describedby="basic-addon2">
+                  <button class="center-box p-btn" style="border-color: #ff3300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                         fill="currentColor"
+                         class="bi bi-search" viewBox="0 0 16 16">
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                  </button>
+                </div>
+                <div *ngIf="searchTitleForm.controls.titleSearch.hasError('required') &&
+              searchTitleForm.controls.titleSearch.touched" class="text-danger"> Nhập tiêu đề cần tìm kiếm!
+                </div>
+                <div *ngIf="searchTitleForm.controls.titleSearch.hasError('maxlength') &&
+              searchTitleForm.controls.titleSearch.touched" class="text-danger"> Độ dài không quá 100 ký tự!.
+                </div>
+                <div *ngIf="searchTitleForm.controls.titleSearch.hasError('pattern') &&
+              searchTitleForm.controls.titleSearch.touched" class="text-danger"> Không được bắt đầu bằng khoảng trắng.
+                </div>
+              </form>
+            </li>
+
+            <li class="p-li">
+              <b class="p-border">Tin tức mới cập nhật</b>
+            </li>
+            <hr class="hr">
+            <li class="p-li">
+              <a style="text-decoration-line: none" href="">Hướng dẫn cách cầm nhà đất tại tiệm
+                cầm đồ tư
+                nhân</a>
+            </li>
+            <hr>
+            <li class="p-li">
+              <a style="text-decoration-line: none"
+                 href="https://camdonhanh.vn/blog/thu-tuc-cam-do.html">Các
+                thủ tục cầm đồ nhanh
+              </a>
+            </li>
+            <hr>
+            <li class="p-li">
+              <a style="text-decoration-line: none"
+                 href="https://luatminhkhue.vn/cam-do-va-cam-co-cac-van-de-phap-ly-lien-quan--.aspx">
+                Cầm đồ và cầm cố các vấn đề pháp lý liên quan ? Mạo danh cắm xe người khác có
+                phạm tội ?
+              </a>
+            </li>
+            <hr>
+            <li class="p-li">
+              <a style="text-decoration-line: none" href="">Các địa điểm cầm đồ uy tín ở các
+                Tỉnh/Thành
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modelId" data-bs-backdrop="static"
+       data-bs-keyboard="false" tabindex="-1"
+       aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header p-bg ">
+          <h5 class="modal-title" id="exampleModalLabel"><span>Delete</span></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có muốn xoá title <b>{{titleModal}}</b>
+        </div>
+
+        <div class="modal-footer">
+          <div>(<span style="color: red">*Lưu ý</span>): Bạn có chắc chắn muốn xoá không? Nếu xoá thì
+            sẽ không
+            được hoàn tác lại
+          </div>
+          <div>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="resetModal()">Close
+            </button>
+            <button (click)="deleteTitle()" type="button" class="btn btn-primary p-delete" data-bs-dismiss="modal">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,230 @@
+<div class="container ps-5 pe-5">
+  <div class="row py-5 mt-4 align-items-center justify-content-center">
+    <div class="col-md-11 col-lg-10 ml-auto shadow-lg bg-light p-4">
+      <div
+           class="modal-header justify-content-center d-flex mb-4">
+        <h3 class="modal-title text-dark">TRẢ ĐỒ</h3>
+      </div>
+      <div class="input-group-sm col-lg-12 mx-auto mb-3">
+        <button class="p-btn btn-block ps-lg-4 pe-lg-4"
+                data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="chooseContract()">Chọn hợp đồng
+        </button>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 form-group mb-2">
+          <label for="code" class="form-label font-weight-bold">Mã hợp đồng</label>
+          <input readonly id="code" name="code" type="text" class="form-control bg-white" [ngModel]="code"
+                 placeholder="VD: HD-NV001">
+
+        </div>
+        <div class="col-md-8 form-group mb-2">
+          <label for="customer" class="form-label font-weight-bold">Tên khách hàng</label>
+          <input readonly id="customer" name="code" type="text" class="form-control bg-white" [ngModel]="customerName"
+                 placeholder="VD: Nguyễn Văn A">
+        </div>
+
+        <div class="col-md-12 form-group mb-3">
+          <label for="pawnItem" class="form-label font-weight-bold">Đồ cầm</label>
+          <input disabled id="pawnItem" type="text" name="pawnItem" placeholder="VD: Iphone 14 ProMax"
+                 class="form-control bg-white" [ngModel]="pawnItem">
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="interest" class="form-label font-weight-bold">Tiền cho vay(VND)</label>
+          <input disabled id="interest" type="text" name="interest" placeholder="VD: 10,000,000"
+                 class="form-control bg-white"
+                 [ngModel]="itemPrice | currency: ' ': ' ': '6.0'">
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="interestRate" class="form-label font-weight-bold">Lãi suất(%)</label>
+          <input disabled id="interestRate" type="text" name="interestRate" placeholder="VD: 5"
+                 class="form-control bg-white" [ngModel]="interestRate">
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="startDate" class="form-label font-weight-bold">Ngày bắt đầu</label>
+          <input *ngIf="code != ''" disabled id="startDate" type="text" name="startDate" placeholder="VD: 10/10/2021"
+                 class="form-control bg-white" [ngModel]="startDate | date: 'dd/MM/yyyy'">
+
+          <input *ngIf="code == ''" disabled type="text" name="startDate" placeholder="VD: 10/10/2021"
+                 class="form-control bg-white">
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label for="endDate" class="form-label font-weight-bold">Ngày kết thúc</label>
+          <input *ngIf="code != ''" disabled id="endDate" type="text" name="endDate" placeholder="Ngày kết thúc"
+                 class="form-control bg-white" [ngModel]="endDate | date:'dd/MM/yyyy'">
+
+          <input *ngIf="code == ''" disabled type="text" name="endDate" placeholder="VD: 10/10/2022"
+                 class="form-control bg-white">
+        </div>
+
+        <div class="col-md-12 form-group mb-3">
+          <label for="returnDate" class="form-label font-weight-bold">Ngày trả đồ</label>
+          <input disabled *ngIf="code != ''" id="returnDate" type="text" name="returnDate" placeholder="Ngày trả đồ"
+                 class="form-control data-pro bg-white"
+                 [ngModel]="returnDate | date:'dd/MM/yyyy'">
+
+          <input disabled *ngIf="code == ''" type="text" name="returnDate" placeholder="VD: 25/10/2022"
+                 class="form-control data-pro bg-white">
+        </div>
+
+        <div class="col-md-12 form-group mb-4">
+          <label for="paymentAmount" class="form-label font-weight-bold">Số tiền thanh toán(VND)</label>
+          <input disabled id="paymentAmount" type="text" name="paymentAmount" placeholder="VD: 10,500,000"
+                 class="form-control bg-white"
+                 [ngModel]="liquidationPrice | currency: ' ': ' ': '6.0'">
+        </div>
+
+      </div>
+      <div style="text-align: right" class="form-group-sm">
+        <button class="btn btn-secondary btn-block mx-2 ps-lg-4 pe-lg-4" (click)="reset()">Làm mới
+        </button>
+        <button *ngIf="code != ''" type="submit" class="p-btn btn-block mx-2 ps-lg-3 pe-lg-3"
+                data-bs-toggle="modal" data-bs-target="#confirmPayModal">Thanh toán
+        </button>
+        <button *ngIf="code == ''" disabled type="submit" class="p-btn btn-block mx-2 ps-lg-3 pe-lg-3"
+                style="opacity: 0.5;" data-bs-toggle="modal" data-bs-target="#confirmPayModal">Thanh toán
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirm pay -->
+<div class="modal fade" id="confirmPayModal" tabindex="-1" aria-labelledby="confirmPayModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div style="background: linear-gradient(to right,#f37214,#ff3300);" class="modal-header">
+        <h1 class=" modal-title fs-5 text-white" id="confirmPayModalLabel">Xác nhận thanh toán</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>THÔNG BÁO XÁC NHẬN THANH TOÁN THÀNH CÔNG</p>
+        <span>Email xác nhận thanh toán sẽ được gửi đến địa chỉ email: </span>
+        <span class="text-warning"><small>{{email}}</small></span>
+        <hr>
+        <div style="text-align: right" class="form-group-lg">
+          <button class="p-btn btn-block mx-2 ps-lg-4 pe-lg-4"
+                  data-bs-toggle="modal" data-bs-target="#confirmPayModal" (click)="returnItem()">Xác nhận
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal list contract -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div style="background: linear-gradient(to right,#f37214,#ff3300);" class="modal-header">
+        <h2 class=" modal-title fs-5 text-white" id="exampleModalLabel">DANH SÁCH HỢP ĐỒNG</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="input-group-sm col-lg-3 mb-2">
+              <label for="idSearch" class="form-label font-weight-bold">Mã hợp đồng</label>
+              <input id="idSearch" type="text" name="idSearch" placeholder="VD: HD-NV001"
+                     class="form-control bg-white border-left-0 border-md" [(ngModel)]="codeSearch">
+            </div>
+
+            <div class="input-group-sm col-lg-3 mb-2">
+              <label for="nameSearch" class="form-label font-weight-bold">Tên khách hàng</label>
+              <input id="nameSearch" type="text" name="nameSearch" placeholder="VD: Nguyễn Văn A"
+                     class="form-control bg-white border-left-0 border-md" [(ngModel)]="customerNameSearch">
+            </div>
+
+            <div class="input-group-sm col-lg-3 mb-2">
+              <label for="consignmentSearch" class="form-label font-weight-bold">Đồ cầm</label>
+              <input id="consignmentSearch" type="text" name="consignmentSearch"
+                     placeholder="VD: IPhone 14 ProMax"
+                     class="form-control bg-white border-left-0 border-md" [(ngModel)]="pawnItemSearch">
+            </div>
+
+            <div class="input-group-sm col-lg-3 mb-4">
+              <label for="dateSearch" class="form-label font-weight-bold">Ngày làm hợp đồng</label>
+              <input id="dateSearch" type="date" name="dateSearch"
+                     class="form-control bg-white border-left-0 border-md" [(ngModel)]="startDateSearch">
+            </div>
+            <div class="form-group-sm col-lg-2 mx-auto mb-4 justify-content-center d-flex">
+              <button type="submit"
+                      class="p-btn btn-block ps-lg-3 pe-lg-3 page-link" (click)="search()"
+                      (window:keyup.enter)="search()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                     class="bi bi-search" viewBox="0 0 16 16">
+                  <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg>
+                Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive" *ngIf="contractList.length != 0">
+          <table class="table table-striped table-hover shadow" border="1">
+            <thead>
+            <tr class="p-bg-warning">
+              <th align="center">#</th>
+              <th align="center">Mã hợp đồng</th>
+              <th align="center">Tên khách hàng</th>
+              <th align="center">Đồ cầm</th>
+              <th align="center">Tiền cho vay(VND)</th>
+              <th align="center">Ngày làm hợp đồng</th>
+              <th align="center">Hoạt động</th>
+            </tr>
+            </thead>
+            <tbody class="table-responsive">
+            <tr *ngFor="let item of contractList, index as i">
+              <th>{{i + 1}}</th>
+              <td>{{item.code}}</td>
+              <td>{{item.customer}}</td>
+              <td>{{item.pawnItem}}</td>
+              <td>{{item.itemPrice |  currency: ' ': ' ': '6.0'}}đ</td>
+              <td>{{item.startDate | date: 'dd/MM/yyyy'}}</td>
+              <td>
+                <button style="color: white" type="button" class="btn btn-warning" data-bs-dismiss="modal"
+                        (click)="getContract(item)">Chọn
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-danger" *ngIf="contractList.length == 0">
+          <strong>Không tìm thấy!</strong>
+        </div>
+        <div class="mt-3 container d-flex justify-content-center shadow">
+          <ul class="p-pagination modal-2">
+            <li class="page-item" *ngIf="indexPagination">
+              <a class="page-link text-dark" (click)="previousPage()">&laquo;</a>
+            </li>
+            <ng-container *ngFor="let pageNow of pageSelect">
+              <ng-container *ngIf="pageNow == indexPagination">
+                <li class="page-item"><a class="page-link text-light active">{{pageNow + 1}}</a></li>
+              </ng-container>
+              <ng-container *ngIf="pageNow != indexPagination">
+                <li class="page-item"><a class="page-link text-dark" (click)="changePage(pageNow)">{{pageNow + 1}}</a>
+                </li>
+              </ng-container>
+            </ng-container>
+            <li class="page-item" *ngIf="indexPagination != totalRecords - 1">
+              <a class="page-link text-dark" (click)="nextPage()">&raquo;</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
